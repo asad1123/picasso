@@ -23,8 +23,7 @@ class ImageView(MethodView):
 
         images = (
             db.session.query(Image)
-            .filter(Image.width <= width)
-            .filter(Image.height <= height)
+            .filter(width >=  Image.width, height >= Image.height)
             .paginate(page=page, error_out=False, max_per_page=10)
         )
 
