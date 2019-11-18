@@ -1,10 +1,11 @@
 <script context="module">
   import { onMount } from "svelte";
   import Icon from "fa-svelte";
-  import { faFilter } from "@fortawesome/free-solid-svg-icons";
+  import { faFilter, faSadTear } from "@fortawesome/free-solid-svg-icons";
   import ImageListItem from "./image-list-item.svelte";
 
   let menuIcon = faFilter;
+  let notFoundIcon = faSadTear;
 </script>
 
 <script>
@@ -90,7 +91,13 @@
     </div>
   </nav>
   <div class="spaced-container p-5" />
-  {#if imageUrls && imageUrls.length}
+  {#if !imageUrls || !imageUrls.length}
+    <h3 class="text-center mt-5">
+      No images found!
+      <Icon icon={notFoundIcon} /><br />
+      Try changing your filter parameters.
+    </h3>
+  {:else}
     {#each imageUrls as imageUrl}
       <div class="spaced-container">
         <ImageListItem imgSrcUrl={imageUrl} />
