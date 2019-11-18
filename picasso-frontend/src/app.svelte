@@ -2,6 +2,13 @@
   import ImageList from "./image-module/image-list.svelte";
 </script>
 
+<style>
+  .encapsulate {
+    max-width: 800px;
+    margin: auto;
+  }
+</style>
+
 <svelte:head>
   <style>
     body {
@@ -10,4 +17,6 @@
   </style>
 </svelte:head>
 
-<ImageList />
+<div class="encapsulate">
+  <ImageList />
+</div>

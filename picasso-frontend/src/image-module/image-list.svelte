@@ -1,10 +1,10 @@
 <script context="module">
   import { onMount } from "svelte";
   import Icon from "fa-svelte";
-  import { faBars } from "@fortawesome/free-solid-svg-icons";
+  import { faFilter } from "@fortawesome/free-solid-svg-icons";
   import ImageListItem from "./image-list-item.svelte";
 
-  let menuIcon = faBars;
+  let menuIcon = faFilter;
 </script>
 
 <script>
@@ -70,7 +70,7 @@
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false">
-        <Icon class="text-light h4" icon={faBars} />
+        <Icon class="text-light h4" icon={menuIcon} />
       </button>
       <div
         class="dropdown-menu dropdown-menu-right mx-2"
