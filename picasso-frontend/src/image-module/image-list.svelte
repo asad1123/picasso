@@ -17,8 +17,10 @@
   let prevHeight = 1200;
 
   function getImages() {
+    let hostname = __API__ ? __API__ : `http://${window.location.hostname}:8000`;
+
     fetch(
-      `http://${window.location.hostname}:8000/images/?page=${nextPage}&width=${maxWidth}&height=${maxHeight}`
+      `${hostname}/images/?page=${nextPage}&width=${maxWidth}&height=${maxHeight}`
     )
       .then(resp => resp.json())
       .then(function(data) {
