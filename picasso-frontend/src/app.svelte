@@ -2,10 +2,12 @@
   import ImageList from "./image-module/image-list.svelte";
 </script>
 
-<style>
-  h1 {
-    color: purple;
-  }
-</style>
+<svelte:head>
+  <style>
+    body {
+      background-color: darkgray;
+    }
+  </style>
+</svelte:head>
 
 <ImageList />
