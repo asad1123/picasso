@@ -23,7 +23,7 @@
     window.open(
       "https://www.facebook.com/sharer.php?u=" + sourceUrl,
       "popup",
-      "width=480,height=320"
+      "width=480,height=320" // set fixed window size
     );
   }
 
@@ -47,6 +47,7 @@
 
 <section data-component="image-list-item">
   <div class="container-fluid mx-auto p-3">
+    <!-- image container -->
     <div class="row">
       <div class="container-fluid">
         <img
@@ -55,7 +56,8 @@
           alt="Pastebin" />
       </div>
     </div>
-
+    
+    <!-- image controls container -->
     <div class="row py-2">
       <div class="d-block mx-auto float-center">
         <button

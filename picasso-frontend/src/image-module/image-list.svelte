@@ -15,10 +15,14 @@
   let prevWidth = 1200;
   let maxHeight = 1200;
   let prevHeight = 1200;
+  let isLoading = false;
 
   function getImages() {
-    let hostname = __API__ ? __API__ : `http://${window.location.hostname}:8000`;
+    let hostname = __API__
+      ? __API__
+      : `http://${window.location.hostname}:8000`;
 
+    isLoading = true;
     fetch(
       `${hostname}/images/?page=${nextPage}&width=${maxWidth}&height=${maxHeight}`
     )
@@ -35,13 +39,16 @@
 
         imageUrls =
           imageUrls && imageUrls.length ? [...imageUrls, ...newUrls] : newUrls;
+
+        isLoading = false;
+        return false;
       });
   }
 
   function applyFilter() {
     if (prevHeight !== maxHeight || prevWidth !== maxWidth) {
       prevWidth = maxHeight;
-      prevWidth = maxWidth; 
+      prevWidth = maxWidth;
       imageUrls = [];
       nextPage = 1;
       getImages();
@@ -58,7 +65,7 @@
     padding: 20px;
   }
   input[type="number"] {
-    width: 80px;
+    width: 80px; /* setting max width on filter input */
   }
 </style>
 
@@ -75,17 +82,20 @@
         aria-expanded="false">
         <Icon class="text-light h4" icon={menuIcon} />
       </button>
+      <!-- filter dropdown menu -->
       <div
         class="dropdown-menu dropdown-menu-right mx-2"
         aria-labelledby="filterMenu">
         <div class="px-3 mx-3">
           <div class="form-group">
             <label for="width">Max Width</label>
-            <input type="number" bind:value={maxWidth} /> px
+            <input type="number" bind:value={maxWidth} />
+            px
           </div>
           <div class="form-group">
             <label for="height">Max Height</label>
-            <input type="number" bind:value={maxHeight} /> px
+            <input type="number" bind:value={maxHeight} />
+            px
           </div>
           <button on:click={applyFilter} class="btn btn-primary">Apply</button>
         </div>
@@ -93,24 +103,35 @@
     </div>
   </nav>
   <div class="spaced-container p-5" />
-  {#if !imageUrls || !imageUrls.length}
+  <!-- loading screen -->
+  {#if isLoading}
+    <div
+      class="d-flex justify-content-center align-items-center bg-spinner my-4">
+      <div class="spinner-border" role="status" />
+    </div>
+  <!-- no results -->
+  {:else if !imageUrls || !imageUrls.length}
     <h3 class="text-center mt-5">
       No images found!
-      <Icon icon={notFoundIcon} /><br />
+      <Icon icon={notFoundIcon} />
+      <br />
       Try changing your filter parameters.
     </h3>
   {:else}
+    <!-- show images -->
     {#each imageUrls as imageUrl}
-      <div class="spaced-container">
-        <ImageListItem imgSrcUrl={imageUrl} />
-      </div>
+      <ImageListItem imgSrcUrl={imageUrl} />
     {/each}
-  {/if}
-  {#if nextPage}
-    <div align="center">
-      <button class="btn btn-secondary my-3" on:click={getImages}>
-        Load More
-      </button>
-    </div>
+    <!-- enable pagination if there is a next page -->
+    {#if nextPage}
+      <div align="center">
+        <button
+          type="button"
+          class="btn btn-secondary my-3"
+          on:click|preventDefault={getImages}>
+          <span>Load More</span>
+        </button>
+      </div>
+    {/if}
   {/if}
 </section>
